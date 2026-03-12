@@ -17,10 +17,49 @@ public class Bug {
 	}
 	
 	public Bug (Bug copyBug) {
-		// TODO: Add code for init from another bug (copy)
+		bugName = copyBug.getName();
+		bugDiscription = copyBug.getDiscription();
+		for (String s : copyBug.getArtifactList()) {
+			artifactList.add(s);
+		}
 	}
 	
 	public Bug (String loadstr) {
 		// TODO: Add code for init from a string
+	}
+	
+	public String getName() {
+		return bugName;
+	}
+	
+	public String getDiscription() {
+		return bugDiscription;
+	}
+	
+	public boolean hasArtifact(String artifact) {
+		boolean hasArtifact = false;
+		for (String s : artifactList) {
+			if (s.equals(artifact)) {
+				hasArtifact = true;
+				break;
+			}
+		}
+		return hasArtifact;
+	}
+	
+	public String getArtifactsString() {
+		String returnStr = "";
+		boolean isFirstStr = true;
+		for (String s : artifactList) {
+			if (!isFirstStr) {
+				returnStr = returnStr + ", ";
+			}
+			returnStr = returnStr + s;
+		}
+		return (returnStr);
+	}
+	
+	private ArrayList<String> getArtifactList() {
+		return artifactList;
 	}
 }
