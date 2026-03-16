@@ -62,4 +62,8 @@ public class Bug {
 	private ArrayList<String> getArtifactList() {
 		return artifactList;
 	}
+	
+	public String saveBug() {
+		return ""; // TODO: add code for saving a bug.
+	}
 }
