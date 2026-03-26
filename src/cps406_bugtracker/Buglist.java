@@ -13,6 +13,13 @@ public class Buglist {
 	// TODO: Add code for copying the contents of the copylist (MAKE NEW BUGS, DON'T JUST GRAB THE POINTERS)
 	public Buglist(Buglist copylist){
 		buglist = new ArrayList<Bug>();
+		for (Bug b : copylist.getBugArrayList()) {
+			buglist.add(new Bug(b));
+		}
+	}
+	
+	private ArrayList<Bug> getBugArrayList() {
+		return (buglist);
 	}
 	
 	/*  

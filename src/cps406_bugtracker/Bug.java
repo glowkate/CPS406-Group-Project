@@ -10,7 +10,7 @@ public class Bug {
 	
 	public Bug (String initName, String initDiscription, int initID) {
 		bugName = initName;
-		bugDiscription = initName;
+		bugDiscription = initDiscription;
 		artifactList = new TreeSet<String>();
 		bugID = initID;
 	}
@@ -22,6 +22,7 @@ public class Bug {
 		for (String s : copyBug.getArtifactList()) {
 			artifactList.add(s);
 		}
+		bugID = copyBug.getID();
 	}
 	
 	public Bug (String loadStr) {
@@ -33,28 +34,32 @@ public class Bug {
 		char c;
 		for(int i = 0; i < loadStr.length(); i++) {
 			c = loadStr.charAt(i);
-			if(loadingStr == true && c == ']') {
+			if(loadingStr && c == ']') {
 				switch(curPhase) {
 					case 0:
 						bugName = curLoadedString;
+						System.out.println("Loaded bug name: " + curLoadedString);
 						curPhase = 1;
 						break;
 					case 1:
 						bugDiscription = curLoadedString;
+						System.out.println("Loaded bug description: " + curLoadedString);
 						curPhase = 2;
 						break;
 					case 2:
 						artifactList.add(curLoadedString);
+						System.out.println("Loaded bug artifact: " + curLoadedString);
 						break;
 					case 3:
-						Integer.parseInt(curLoadedString);
+						bugID = Integer.parseInt(curLoadedString);
+						System.out.println("Loaded bug ID: " + curLoadedString);
 						loadSuccsess = true;
 						break;
 				}
 				curLoadedString = "";
 				loadingStr = false;
 			}
-			else if(c == '}' && curPhase == 3) {
+			else if(c == '}' && curPhase == 2) {
 				curPhase = 3;
 			}
 			else if(c == '[') {
@@ -96,7 +101,7 @@ public class Bug {
 			if (!isFirstStr) {
 				returnStr = returnStr + ", ";
 			}
-			returnStr = "[" + returnStr + s + "]";
+			returnStr =  returnStr + "[" + s + "]";
 		}
 		returnStr = returnStr + "}";
 		return (returnStr);
@@ -112,7 +117,7 @@ public class Bug {
 	
 	public String saveBug() {
 		String returnStr =  "Bug Name: [" + bugName;
-		returnStr = returnStr + "], Bug Discripion: [ " + bugDiscription;
+		returnStr = returnStr + "], Bug Discripion: [" + bugDiscription;
 		returnStr = returnStr +  "], Artifacts: " + getArtifactsString();
 		returnStr = returnStr + ", ID: [" + String.valueOf(bugID) + "]";
 		return returnStr;
