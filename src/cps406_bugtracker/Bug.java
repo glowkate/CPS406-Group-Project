@@ -82,6 +82,10 @@ public class Bug {
 		return bugDiscription;
 	}
 	
+	public void setDiscription(String newDesc) {
+		bugDiscription = newDesc;
+	}
+	
 	public boolean hasArtifact(String artifact) {
 		return artifactList.contains(artifact);
 	}

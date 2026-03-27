@@ -41,8 +41,8 @@ public class Buglist {
 	}
 	
 	
-	private void addBug(Bug addedBug) {
-		Bug newBug = new Bug(addedBug);
+	private void addLoadedBug(String bugStr) {
+		Bug newBug = new Bug(bugStr);
 		buglist.add(newBug);
 	}
 	
@@ -55,5 +55,68 @@ public class Buglist {
 			}
 		}
 		return(-1);
+	}
+	
+	public ArrayList<String> getBugInfo(int fetchID) {
+		int bugIndex = getBugIndexFromID(fetchID);
+		Bug foundBug;
+		ArrayList<String> returnStrings = new ArrayList<String>();
+		if(bugIndex != -1) {
+			foundBug = buglist.get(bugIndex);
+			returnStrings.add(foundBug.getName());
+			returnStrings.add(foundBug.getDiscription());
+			returnStrings.add(foundBug.getArtifactsString());
+		}
+		else {
+			returnStrings.add("");
+			returnStrings.add("");
+			returnStrings.add("");
+		}
+		return (returnStrings);
+	}
+	
+	public void removeBug(int fetchID) {
+		int bugIndex = getBugIndexFromID(fetchID);
+		if(bugIndex != -1) {
+			buglist.remove(bugIndex);
+		}
+	}
+	
+	public void modifyBugDesc(int fetchID, String newDesc) {
+		int bugIndex = getBugIndexFromID(fetchID);
+		Bug foundBug;
+		if(bugIndex != -1) {
+			foundBug = buglist.get(bugIndex);
+			foundBug.setDiscription(newDesc);
+		}
+	}
+	
+	public ArrayList<String> getBugsAsStrings(){
+		ArrayList<String> returnList = new ArrayList<String>();
+		for(Bug b : buglist) {
+			returnList.add(bugToString(b));
+		}
+		return(returnList);
+	}
+	
+	public ArrayList<String> getBugsAsStrings(ArrayList<String> artifactList){
+		ArrayList<String> returnList = new ArrayList<String>();
+		boolean hasArtifacts;
+		for(Bug b : buglist) {
+			hasArtifacts = true;
+			for(String s : artifactList) {
+				if(!b.hasArtifact(s)) {
+					hasArtifacts = false;
+				}
+			}
+			if(hasArtifacts) {
+				returnList.add(bugToString(b));
+			}
+		}
+		return(returnList);
+	}
+	
+	private String bugToString(Bug inBug) {
+		return(inBug.getName() + "(ID: " + String.valueOf(inBug.getID()) + ")\n" + inBug.getDiscription() + "\n" + inBug.getArtifactsString());
 	}
 }
