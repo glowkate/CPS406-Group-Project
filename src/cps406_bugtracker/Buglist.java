@@ -91,6 +91,15 @@ public class Buglist {
 		}
 	}
 	
+	public void addArtifactToBug(String newArtifact, int fetchID) {
+		int bugIndex = getBugIndexFromID(fetchID);
+		Bug foundBug;
+		if(bugIndex != -1) {
+			foundBug = buglist.get(bugIndex);
+			foundBug.addArtifact(newArtifact);
+		}
+	}
+	
 	public ArrayList<String> getBugsAsStrings(){
 		ArrayList<String> returnList = new ArrayList<String>();
 		for(Bug b : buglist) {
@@ -114,6 +123,14 @@ public class Buglist {
 			}
 		}
 		return(returnList);
+	}
+	
+	public ArrayList<Integer> getAllBugIDs(){
+		ArrayList<Integer> returnList = new ArrayList<Integer>();
+		for(Bug b : buglist) {
+			returnList.add(b.getID());
+		}
+		return (returnList);
 	}
 	
 	private String bugToString(Bug inBug) {
