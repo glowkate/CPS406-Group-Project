@@ -12,12 +12,21 @@ public class Buglist {
 		nextID = 0;
 	}
 	
-	// TODO: Add code for copying the contents of the copylist (MAKE NEW BUGS, DON'T JUST GRAB THE POINTERS)
 	public Buglist(Buglist copylist){
 		buglist = new ArrayList<Bug>();
 		nextID = copylist.getNextID();
 		for (Bug b : copylist.getBugArrayList()) {
 			buglist.add(new Bug(b));
+		}
+	}
+	
+	public Buglist(ArrayList<String> stringBugs) {
+		nextID = 0;
+		for(int i = 0; i < stringBugs.size(); i++) {
+			buglist.add(new Bug (stringBugs.get(i)));
+			if(buglist.get(i).getID() > nextID) {
+				nextID = buglist.get(i).getID() + 1;
+			}
 		}
 	}
 	
@@ -35,15 +44,12 @@ public class Buglist {
 		return (nextID);
 	}
 	
-	public void addBug(String bugName, String bugDescription) {
-		Bug newBug = new Bug(bugName, bugDescription, newID());
+	// Returns the ID of the new bug
+	public int addBug(String bugName, String bugDescription) {
+		int setID = newID();
+		Bug newBug = new Bug(bugName, bugDescription, setID);
 		buglist.add(newBug);
-	}
-	
-	
-	private void addLoadedBug(String bugStr) {
-		Bug newBug = new Bug(bugStr);
-		buglist.add(newBug);
+		return (setID);
 	}
 	
 	private int getBugIndexFromID(int fetchID) {
@@ -100,40 +106,33 @@ public class Buglist {
 		}
 	}
 	
-	public ArrayList<String> getBugsAsStrings(){
-		ArrayList<String> returnList = new ArrayList<String>();
-		for(Bug b : buglist) {
-			returnList.add(bugToString(b));
+	public ArrayList<Integer> getBugIDs(){
+		ArrayList<Integer> returnList = new ArrayList<Integer>();
+		Bug curBug;
+		for(int i = 0; i < buglist.size() ; i++) {
+			curBug = buglist.get(i);
+			returnList.add(curBug.getID());
 		}
 		return(returnList);
 	}
 	
-	public ArrayList<String> getBugsAsStrings(ArrayList<String> artifactList){
-		ArrayList<String> returnList = new ArrayList<String>();
+	public ArrayList<Integer> getBugIDs(ArrayList<String> artifactList){
+		ArrayList<Integer> returnList = new ArrayList<Integer>();
 		boolean hasArtifacts;
-		for(Bug b : buglist) {
+		Bug curBug;
+		for(int i = 0; i < buglist.size() ; i++) {
 			hasArtifacts = true;
+			curBug = buglist.get(i);
 			for(String s : artifactList) {
-				if(!b.hasArtifact(s)) {
+				if(!curBug.hasArtifact(s)) {
 					hasArtifacts = false;
 				}
 			}
 			if(hasArtifacts) {
-				returnList.add(bugToString(b));
+				returnList.add(curBug.getID());
 			}
 		}
 		return(returnList);
 	}
 	
-	public ArrayList<Integer> getAllBugIDs(){
-		ArrayList<Integer> returnList = new ArrayList<Integer>();
-		for(Bug b : buglist) {
-			returnList.add(b.getID());
-		}
-		return (returnList);
-	}
-	
-	private String bugToString(Bug inBug) {
-		return(inBug.getName() + "(ID: " + String.valueOf(inBug.getID()) + ")\n" + inBug.getDiscription() + "\n" + inBug.getArtifactsString());
-	}
 }
