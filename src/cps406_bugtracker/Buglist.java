@@ -70,10 +70,12 @@ public class Buglist {
 		if(bugIndex != -1) {
 			foundBug = buglist.get(bugIndex);
 			returnStrings.add(foundBug.getName());
+			returnStrings.add(String.valueOf(fetchID));
 			returnStrings.add(foundBug.getDiscription());
 			returnStrings.add(foundBug.getArtifactsString());
 		}
 		else {
+			returnStrings.add("");
 			returnStrings.add("");
 			returnStrings.add("");
 			returnStrings.add("");
@@ -133,6 +135,10 @@ public class Buglist {
 			}
 		}
 		return(returnList);
+	}
+
+	public void printBugInfo(ArrayList<String> bugInfo) {
+		System.out.println("Name: " + bugInfo.get(0) + "\nID: " + bugInfo.get(1) + "\nDescription: " + bugInfo.get(2) + "\nArtifacts: " + bugInfo.get(3));
 	}
 	
 }
