@@ -1,10 +1,11 @@
 package cps406_bugtracker;
 
-import java.util.ArrayList;
-
 public class Main {
 
 	public static void main(String[] args) {
+		Menu app = new Menu();
+		//to test the menu
+		app.start();
 		// TODO Auto-generated method stub
 		/*
 		 * Manual test code
